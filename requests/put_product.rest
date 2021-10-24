@@ -1,0 +1,8 @@
+PUT http://localhost:3001/api/product/61747cb701d7f158c9565d96
+Content-Type: application/json
+
+{
+    "nameProduct": "sueta",
+    "price": 2000,
+    "url": "www.algo2.com"
+}

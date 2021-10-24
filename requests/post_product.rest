@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/product
+Content-Type: application/json
+
+{
+    "nameProduct": "prueba",
+    "price": 2000,
+    "url": "www.algo.com"
+}
