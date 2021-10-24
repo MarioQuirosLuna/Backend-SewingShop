@@ -29,3 +29,7 @@ To start it locally
 To start it locally in development mode
 
 	npm run dev
+	
+## The project should look like this
+
+![example1](https://user-images.githubusercontent.com/37676736/138611097-d8c3e7fe-3098-44b8-9b89-d4baa38af501.png)
