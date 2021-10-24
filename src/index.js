@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const Product = require('../src/Model/Product')
-const notFound = require('./middleware/notFound.js')
+const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 
 app.use(cors())
@@ -27,7 +27,7 @@ app.get('/api/product/:id', (request,response, next) => {
 			if(product) {
 				return response.json(product)
 			}else{
-				response.status(404).end()
+				next()
 			}
 		}).catch(err => next(err))
 })
@@ -39,7 +39,7 @@ app.get('/api/product/name/:nameProduct', (request,response, next) => {
 			if(product && product.length !== 0) {
 				return response.json(product)
 			}else{
-				response.status(404).end()
+				next()
 			}
 		}).catch(err => next(err))
 })
