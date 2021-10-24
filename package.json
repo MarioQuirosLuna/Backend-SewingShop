@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "API shop",
+  "description": "API - It is a project that I did for the small sewing business that belongs to my mother, in which I needed to show the products that she made",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
@@ -9,7 +9,7 @@
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mario Quiros Luna",
+  "author": "Mario Quiros Luna <https://github.com/MarioQuirosLuna> <marioquiros21@yahoo.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "1.19.0",
