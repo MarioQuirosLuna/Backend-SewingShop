@@ -55,7 +55,7 @@ productRouter.post('/', (req,res, next) => {
 	})
 
 	newProduct.save()
-		.then(savedProduct => res.json(savedProduct))
+		.then(savedProduct => res.status(201).json(savedProduct))
 		.catch(error => next(error))
 })
 

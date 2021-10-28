@@ -12,6 +12,7 @@
   "author": "Mario Quiros Luna <https://github.com/MarioQuirosLuna> <marioquiros21@yahoo.com>",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "1.19.0",
     "cors": "2.8.5",
     "dotenv": "10.0.0",
