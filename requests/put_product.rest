@@ -1,4 +1,4 @@
-PUT http://localhost:3001/api/product/61747cb701d7f158c9565d96
+PUT http://localhost:3001/api/products/617af828cac9cebf7c7fd00a
 Content-Type: application/json
 
 {

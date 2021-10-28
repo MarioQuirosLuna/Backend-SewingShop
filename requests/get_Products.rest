@@ -1,0 +1,25 @@
+//Get initial
+GET http://localhost:3001/
+
+###
+
+//Get all products
+GET http://localhost:3001/api/products
+
+###
+
+//Get One
+GET http://localhost:3001/api/products/61747cb701d7f158c9565d96
+
+
+//GET One by name
+###
+GET http://localhost:3001/api/products/name/sueta
+
+//Error id
+###
+GET http://localhost:3001/api/products/61747cb701d7f158c9565d96s
+
+//get one by non-existent name
+###
+GET http://localhost:3001/api/products/name/suetas
