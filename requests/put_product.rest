@@ -1,8 +1,9 @@
-PUT http://localhost:3001/api/products/617af828cac9cebf7c7fd00a
+PUT http://localhost:3001/api/products/61747cb701d7f158c9565d96
 Content-Type: application/json
+Authorization: Bearer "TOKEN"
 
 {
-    "nameProduct": "sueta",
-    "price": 2000,
+    "nameProduct": "suetaaaaaa",
+    "price": 20000,
     "url": "www.algo2.com"
 }

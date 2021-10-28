@@ -1,4 +1,5 @@
 const productRouter = require('express').Router()
+const userExtractor = require('../middleware/userExtractor')
 const Product = require('../models/Product')
 
 /**
@@ -39,7 +40,7 @@ productRouter.get('/name/:nameProduct', (req,res, next) => {
  * POST
  */
 
-productRouter.post('/', (req,res, next) => {
+productRouter.post('/', userExtractor, (req,res, next) => {
 	const product = req.body
 
 	if(!product) {
@@ -63,7 +64,7 @@ productRouter.post('/', (req,res, next) => {
  * DELETE
  */
 
-productRouter.delete('/:id', (req, res, next) => {
+productRouter.delete('/:id', userExtractor, (req, res, next) => {
 	const { id } = req.params
 	Product.findByIdAndDelete(id)
 		.then(() => res.status(204).end())
@@ -74,7 +75,7 @@ productRouter.delete('/:id', (req, res, next) => {
  * PUT
  */
 
-productRouter.put('/:id', (req, res, next) => {
+productRouter.put('/:id', userExtractor, (req, res, next) => {
 	const { id } = req.params
 	const product = req.body
 	

@@ -8,9 +8,11 @@ userRouter.post('/', async (req, res) => {
 
 	const saltRounds = 10
 	const passwordHash = await bcrypt.hash(password, saltRounds)
+
 	const newUser = new User({
 		username,
 		passwordHash,
+		rol: 'user'
 	})
 
 	const savedUser = await newUser.save()

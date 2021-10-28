@@ -1,24 +1,9 @@
-POST http://localhost:3001/api/products
-Content-Type:application/json
-
-{
-    "name": "prueba",
-    "price": 1200,
-    "url": "www.imagen.com",
-    "comments": [{
-        "user": "user",
-        "comment": "coment"
-    }]
-}
-
-###
-
 POST http://localhost:3001/api/products 
 Content-Type:application/json
+Authorization: Bearer "TOKEN"
 
 {
     "name": "prueba",
     "price": 1200,
-    "url": "https://res.cloudinary.com/dusx4zdpz/image/upload/v1635217676/Logo_apnt8n.png",
-    "comments": []
+    "url": "https://res.cloudinary.com/dusx4zdpz/image/upload/v1635217676/Logo_apnt8n.png"
 }
