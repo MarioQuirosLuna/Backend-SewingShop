@@ -51,21 +51,9 @@ productRouter.post('/', userExtractor, upload.array('images', 10), async (req,re
 	}
 
 	try{
-		//const result = await cloudinary.uploader.upload(req.file.path)
-		const promises = req.files.map(async (file) => {
-			return await cloudinary.uploader.upload(file.path)
-		})
+		let images = await uploadMultiImage(req)
 
-		const result = await Promise.all(promises)
-
-		let images = []
-
-		result.map((img) => {
-			return images.push({
-				cloudinary_id: img.public_id,
-				url: img.secure_url
-			})
-		})
+		if(images.length === 0) return res.status(400).send({error: 'field images is empty'})
 
 		let newProduct = new Product({
 			nameProduct: nameProduct,
@@ -91,11 +79,9 @@ productRouter.delete('/:id', userExtractor, async (req, res, next) => {
 	try{
 		let product = await Product.findOne({_id: id})
 
-		//await cloudinary.uploader.destroy(product.cloudinary_id)
-		const promisesDelete = product.images.map(async (image) => {
-			return await cloudinary.uploader.destroy(image.cloudinary_id)
-		})
-		await Promise.all(promisesDelete)
+		if(!product) return res.status(404).send({error: 'product not found'})
+
+		deleteMultiImage(product)
 
 		await product.remove()
 
@@ -116,26 +102,13 @@ productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req,
 	try{
 		let product = await Product.findOne({_id: id})
 
-		//await cloudinary.uploader.destroy(product.cloudinary_id)
-		const promisesDelete = product.images.map(async (image) => {
-			return await cloudinary.uploader.destroy(image.cloudinary_id)
-		})
-		await Promise.all(promisesDelete)
+		if(!product) return res.status(404).send({error: 'product not found'})
 
-		//const result = await cloudinary.uploader.upload(req.file.path)
-		const promisesUpdate = req.files.map(async (file) => {
-			return await cloudinary.uploader.upload(file.path)
-		})
-		const result = await Promise.all(promisesUpdate)
+		let images = await uploadMultiImage(req)
 
-		let images = []
+		if(images.length === 0) return res.status(400).send({error: 'field images is empty'})
 
-		result.map((img) => {
-			return images.push({
-				cloudinary_id: img.public_id,
-				url: img.secure_url
-			})
-		})
+		deleteMultiImage(product)
 
 		let newProductInfo = {
 			nameProduct: nameProduct,
@@ -152,5 +125,32 @@ productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req,
 	}
 
 })
+
+const uploadMultiImage = async (req) => {
+	
+	const promises = req.files.map(async (file) => {
+		return await cloudinary.uploader.upload(file.path)
+	})
+	const resultUpload = await Promise.all(promises)
+
+	let imagesCloudinary = []
+
+	resultUpload.map((img) => {
+		return imagesCloudinary.push({
+			cloudinary_id: img.public_id,
+			url: img.secure_url
+		})
+	})
+
+	return imagesCloudinary
+}
+
+const deleteMultiImage = async (product) => {
+	//await cloudinary.uploader.destroy(product.cloudinary_id)
+	const promisesDelete = product.images.map(async (image) => {
+		return await cloudinary.uploader.destroy(image.cloudinary_id)
+	})
+	await Promise.all(promisesDelete)
+}
 
 module.exports = productRouter

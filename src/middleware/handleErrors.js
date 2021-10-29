@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 module.exports = (error, req, res, next) => {
-	console.log(error)
+	console.log(error.name)
 	if(error.name === 'CastError'){
 		res.status(400).send({error: 'id used is malformed'})
 	}else if(error.name === 'JsonWebTokenError'){
