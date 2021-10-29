@@ -15,12 +15,20 @@ To install the dependencies use in your local repository
 
 Create an .env file
 
-* Inside specify the PORT and the connection string MONGODB_URI
+Inside 
+* Specify the PORT and the connection string MONGODB_URI
+* Specify the SECRET for jsonwebtoken
+* Specify the CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET for upload images to cloudinary
 	
 For example
 	
 	PORT=####
 	MONGODB_URI=stringconnection
+	SECRET=####
+	
+	CLOUDINARY_CLOUD_NAME=XXXX
+	CLOUDINARY_API_KEY=####
+	CLOUDINARY_API_SECRET=XXXX
 		
 To start it locally
 
@@ -32,4 +40,5 @@ To start it locally in development mode
 	
 ## The project should look like this
 
-![example1](https://user-images.githubusercontent.com/37676736/138611097-d8c3e7fe-3098-44b8-9b89-d4baa38af501.png)
+![Captura de pantalla (5)](https://user-images.githubusercontent.com/37676736/139481385-cd574640-d687-4bd1-ae4d-c0b3b636a0dd.png)
+
