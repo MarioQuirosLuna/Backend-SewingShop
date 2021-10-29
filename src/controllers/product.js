@@ -43,7 +43,7 @@ productRouter.get('/name/:nameProduct', (req,res, next) => {
  * POST
  */
 
-productRouter.post('/', userExtractor, upload.single('image'), async (req,res, next) => {
+productRouter.post('/', userExtractor, upload.array('images', 10), async (req,res, next) => {
 	const { nameProduct, price} = req.body
 
 	if(!nameProduct || !price) {
@@ -51,13 +51,26 @@ productRouter.post('/', userExtractor, upload.single('image'), async (req,res, n
 	}
 
 	try{
-		const result = await cloudinary.uploader.upload(req.file.path)
+		//const result = await cloudinary.uploader.upload(req.file.path)
+		const promises = req.files.map(async (file) => {
+			return await cloudinary.uploader.upload(file.path)
+		})
+
+		const result = await Promise.all(promises)
+
+		let images = []
+
+		result.map((img) => {
+			return images.push({
+				cloudinary_id: img.public_id,
+				url: img.secure_url
+			})
+		})
 
 		let newProduct = new Product({
 			nameProduct: nameProduct,
 			price: price,
-			url: result.secure_url,
-			cloudinary_id: result.public_id
+			images: images
 		})
 
 		const savedProduct = await newProduct.save()
@@ -78,7 +91,11 @@ productRouter.delete('/:id', userExtractor, async (req, res, next) => {
 	try{
 		let product = await Product.findOne({_id: id})
 
-		await cloudinary.uploader.destroy(product.cloudinary_id)
+		//await cloudinary.uploader.destroy(product.cloudinary_id)
+		const promisesDelete = product.images.map(async (image) => {
+			return await cloudinary.uploader.destroy(image.cloudinary_id)
+		})
+		await Promise.all(promisesDelete)
 
 		await product.remove()
 
@@ -92,24 +109,40 @@ productRouter.delete('/:id', userExtractor, async (req, res, next) => {
  * PUT
  */
 
-productRouter.put('/:id', userExtractor, upload.single('image'), async (req, res, next) => {
+productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req, res, next) => {
 	const { id } = req.params
 	const { nameProduct, price } = req.body
 	
 	try{
 		let product = await Product.findOne({_id: id})
 
-		await cloudinary.uploader.destroy(product.cloudinary_id)
-		
-		const result = await cloudinary.uploader.upload(req.file.path)
+		//await cloudinary.uploader.destroy(product.cloudinary_id)
+		const promisesDelete = product.images.map(async (image) => {
+			return await cloudinary.uploader.destroy(image.cloudinary_id)
+		})
+		await Promise.all(promisesDelete)
+
+		//const result = await cloudinary.uploader.upload(req.file.path)
+		const promisesUpdate = req.files.map(async (file) => {
+			return await cloudinary.uploader.upload(file.path)
+		})
+		const result = await Promise.all(promisesUpdate)
+
+		let images = []
+
+		result.map((img) => {
+			return images.push({
+				cloudinary_id: img.public_id,
+				url: img.secure_url
+			})
+		})
 
 		let newProductInfo = {
 			nameProduct: nameProduct,
 			price: price,
-			url: result.secure_url,
-			cloudinary_id: result.public_id
+			images: images
 		}
-		console.log(newProductInfo)
+
 		product = await Product.findByIdAndUpdate(id, newProductInfo, {new : true})
 
 		res.json(product)

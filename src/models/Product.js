@@ -3,8 +3,7 @@ const {model, Schema} = require('mongoose')
 const productSchema = new Schema({
 	nameProduct: String,
 	price: Number,
-	url: String,
-	cloudinary_id: String
+	images: Array
 })
 
 productSchema.set('toJSON', {
