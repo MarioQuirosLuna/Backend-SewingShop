@@ -5,5 +5,5 @@ Authorization: Bearer "TOKEN"
 {
     "nameProduct": "prueba",
     "price": 1200,
-    "url": "https://res.cloudinary.com/dusx4zdpz/image/upload/v1635217676/Logo_apnt8n.png"
+    "image": 'file'
 }

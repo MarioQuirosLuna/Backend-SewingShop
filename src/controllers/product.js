@@ -2,6 +2,9 @@ const productRouter = require('express').Router()
 const userExtractor = require('../middleware/userExtractor')
 const Product = require('../models/Product')
 
+const cloudinary = require('../utils/cloudinary')
+const upload = require('../utils/multer')
+
 /**
  * GETs
  */
@@ -40,54 +43,81 @@ productRouter.get('/name/:nameProduct', (req,res, next) => {
  * POST
  */
 
-productRouter.post('/', userExtractor, (req,res, next) => {
-	const product = req.body
+productRouter.post('/', userExtractor, upload.single('image'), async (req,res, next) => {
+	const { nameProduct, price} = req.body
 
-	if(!product) {
-		return res.status(400).json({
-			error: 'product or product.content is missing'
-		})
+	if(!nameProduct || !price) {
+		return res.status(400).json({ error: 'field is missing' })
 	}
 
-	const newProduct = new Product({
-		nameProduct: product.nameProduct,
-		price: product.price,
-		url: product.url
-	})
+	try{
+		const result = await cloudinary.uploader.upload(req.file.path)
 
-	newProduct.save()
-		.then(savedProduct => res.status(201).json(savedProduct))
-		.catch(error => next(error))
+		let newProduct = new Product({
+			nameProduct: nameProduct,
+			price: price,
+			url: result.secure_url,
+			cloudinary_id: result.public_id
+		})
+
+		const savedProduct = await newProduct.save()
+
+		res.status(201).json(savedProduct)
+	}catch (error) {
+		next(error)
+	}
 })
 
 /**
  * DELETE
  */
 
-productRouter.delete('/:id', userExtractor, (req, res, next) => {
+productRouter.delete('/:id', userExtractor, async (req, res, next) => {
 	const { id } = req.params
-	Product.findByIdAndDelete(id)
-		.then(() => res.status(204).end())
-		.catch(error => next(error))
+	
+	try{
+		let product = await Product.findOne({_id: id})
+
+		await cloudinary.uploader.destroy(product.cloudinary_id)
+
+		await product.remove()
+
+		res.status(204).end()
+	}catch(error){
+		next(error)
+	}
 })
 
 /**
  * PUT
  */
 
-productRouter.put('/:id', userExtractor, (req, res, next) => {
+productRouter.put('/:id', userExtractor, upload.single('image'), async (req, res, next) => {
 	const { id } = req.params
-	const product = req.body
+	const { nameProduct, price } = req.body
 	
-	const newProductInfo = {
-		nameProduct: product.nameProduct,
-		price: product.price,
-		url: product.url
+	try{
+		let product = await Product.findOne({_id: id})
+
+		await cloudinary.uploader.destroy(product.cloudinary_id)
+		
+		const result = await cloudinary.uploader.upload(req.file.path)
+
+		let newProductInfo = {
+			nameProduct: nameProduct,
+			price: price,
+			url: result.secure_url,
+			cloudinary_id: result.public_id
+		}
+		console.log(newProductInfo)
+		product = await Product.findByIdAndUpdate(id, newProductInfo, {new : true})
+
+		res.json(product)
+
+	}catch(error){
+		next(error)
 	}
 
-	Product.findByIdAndUpdate(id, newProductInfo, {new : true})
-		.then(result => res.json(result))
-		.catch(err => next(err))
 })
 
 module.exports = productRouter

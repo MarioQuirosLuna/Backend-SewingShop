@@ -5,5 +5,5 @@ Authorization: Bearer "TOKEN"
 {
     "nameProduct": "suetaaaaaa",
     "price": 20000,
-    "url": "www.algo2.com"
+    "image": 'file'
 }
