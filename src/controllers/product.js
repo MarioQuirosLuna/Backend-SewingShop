@@ -58,6 +58,7 @@ productRouter.post('/', userExtractor, upload.array('images', 10), async (req,re
 		let newProduct = new Product({
 			nameProduct: nameProduct,
 			price: price,
+			availability: 'Por pedido',
 			images: images
 		})
 
@@ -113,6 +114,7 @@ productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req,
 		let newProductInfo = {
 			nameProduct: nameProduct,
 			price: price,
+			availability: 'Por pedido',
 			images: images
 		}
 

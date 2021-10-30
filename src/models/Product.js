@@ -3,6 +3,7 @@ const {model, Schema} = require('mongoose')
 const productSchema = new Schema({
 	nameProduct: String,
 	price: Number,
+	availability: String,
 	images: Array
 })
 
