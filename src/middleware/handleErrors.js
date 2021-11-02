@@ -13,6 +13,6 @@ module.exports = (error, req, res, next) => {
 		//Error with cloudinary
 		res.status(error.http_code).send({error: error.message})
 	}else{
-		res.status(500).end()
+		res.status(500).send({error: error.name})
 	}
 }
