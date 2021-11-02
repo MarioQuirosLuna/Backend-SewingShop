@@ -50,10 +50,10 @@ productRouter.post('/', userExtractor, upload.array('images', 10), async (req,re
 		return res.status(400).json({ error: 'field is missing' })
 	}
 
+	if(req.files.length <= 0 || req.files.length > 10) return res.status(400).send({error: 'field images is empty or exceeds the limit'})
+
 	try{
 		let images = await uploadMultiImage(req)
-
-		if(images.length === 0) return res.status(400).send({error: 'field images is empty'})
 
 		let newProduct = new Product({
 			nameProduct: nameProduct,
@@ -99,6 +99,8 @@ productRouter.delete('/:id', userExtractor, async (req, res, next) => {
 productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req, res, next) => {
 	const { id } = req.params
 	const { nameProduct, price } = req.body
+
+	if(req.files.length <= 0 || req.files.length > 10) return res.status(400).send({error: 'field images is empty or exceeds the limit'})
 	
 	try{
 		let product = await Product.findOne({_id: id})
@@ -106,8 +108,6 @@ productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req,
 		if(!product) return res.status(404).send({error: 'product not found'})
 
 		let images = await uploadMultiImage(req)
-
-		if(images.length === 0) return res.status(400).send({error: 'field images is empty'})
 
 		deleteMultiImage(product)
 
