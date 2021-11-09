@@ -44,9 +44,9 @@ productRouter.get('/name/:nameProduct', (req,res, next) => {
  */
 
 productRouter.post('/', userExtractor, upload.array('images', 10), async (req,res, next) => {
-	const { nameProduct, price} = req.body
+	const { nameProduct, priceInitial, priceFinal} = req.body
 
-	if(!nameProduct || !price) {
+	if(!nameProduct || !priceInitial || !priceFinal) {
 		return res.status(400).json({ error: 'field is missing' })
 	}
 
@@ -58,7 +58,8 @@ productRouter.post('/', userExtractor, upload.array('images', 10), async (req,re
 
 		let newProduct = new Product({
 			nameProduct: nameProduct,
-			price: price,
+			priceInitial: priceInitial,
+			priceFinal: priceFinal,
 			availability: 'Por pedido',
 			images: images
 		})
