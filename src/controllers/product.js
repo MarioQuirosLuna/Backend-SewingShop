@@ -29,7 +29,7 @@ productRouter.get('/:id', (req, res, next) => {
 
 productRouter.get('/name/:nameProduct', (req,res, next) => {
 	const { nameProduct }  = req.params
-	Product.find({nameProduct: nameProduct})
+	Product.find({nameProduct: {'$regex': nameProduct, '$options': 'i'}})
 		.then(product => {
 			if(product && product.length !== 0) {
 				return res.json(product)

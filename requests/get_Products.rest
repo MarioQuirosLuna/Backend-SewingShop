@@ -14,7 +14,7 @@ GET http://localhost:3001/api/products/61747cb701d7f158c9565d96
 
 //GET One by name
 ###
-GET http://localhost:3001/api/products/name/sueta
+GET http://localhost:3001/api/products/name/mEdias
 
 //Error id
 ###
