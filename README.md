@@ -44,4 +44,4 @@ To start it locally in development mode
 
 ## Frontend
 
-The backend repository is here: https://tallerdecosturacintyaluna.vercel.app/
+The frontend repository is here: https://tallerdecosturacintyaluna.vercel.app/
