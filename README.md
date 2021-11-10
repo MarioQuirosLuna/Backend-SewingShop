@@ -44,4 +44,6 @@ To start it locally in development mode
 
 ## Frontend
 
-The frontend repository is here: https://tallerdecosturacintyaluna.vercel.app/
+The frontend repository is here: https://github.com/MarioQuirosLuna/Frontend-SewingShop
+
+Deployed in: https://tallerdecosturacintyaluna.vercel.app/
