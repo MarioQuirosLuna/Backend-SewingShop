@@ -100,25 +100,35 @@ productRouter.delete('/:id', userExtractor, async (req, res, next) => {
 
 productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req, res, next) => {
 	const { id } = req.params
-	const { nameProduct, price } = req.body
+	const { nameProduct, priceInitial, priceFinal } = req.body
 	
 	try{
-
-		if(req.files.length <= 0) return res.status(400).send({error: 'field images is empty'})
+ 
 
 		let product = await Product.findOne({_id: id})
 
 		if(!product) return res.status(404).send({error: 'product not found'})
 
-		let images = await uploadMultiImage(req)
+		let images = null
+		let newProductInfo = {}
 
-		deleteMultiImage(product)
-
-		let newProductInfo = {
-			nameProduct: nameProduct,
-			price: price,
-			availability: 'Por pedido',
-			images: images
+		if(req.files.length <= 0){
+			images = await uploadMultiImage(req)
+			newProductInfo = {
+				nameProduct: nameProduct,
+				priceInitial: priceInitial,
+				priceFinal: priceFinal,
+				availability: 'Por pedido',
+				images: product.images.concat(images)
+			}
+		}else{	
+			newProductInfo = {
+				nameProduct: nameProduct,
+				priceInitial: priceInitial,
+				priceFinal: priceFinal,
+				availability: 'Por pedido',
+				images: product.images
+			}
 		}
 
 		product = await Product.findByIdAndUpdate(id, newProductInfo, {new : true})
