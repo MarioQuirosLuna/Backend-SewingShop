@@ -111,8 +111,8 @@ productRouter.put('/:id', userExtractor, upload.array('images', 10), async (req,
 
 		let images = null
 		let newProductInfo = {}
-
-		if(req.files.length < 0){
+		
+		if(req.files.length > 0){
 			images = await uploadMultiImage(req)
 			newProductInfo = {
 				nameProduct: nameProduct,
