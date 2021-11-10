@@ -42,3 +42,6 @@ To start it locally in development mode
 
 ![Captura de pantalla (5)](https://user-images.githubusercontent.com/37676736/139481385-cd574640-d687-4bd1-ae4d-c0b3b636a0dd.png)
 
+## Frontend
+
+The backend repository is here: https://tallerdecosturacintyaluna.vercel.app/
