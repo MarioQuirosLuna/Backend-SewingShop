@@ -42,6 +42,10 @@ To start it locally in development mode
 
 ![Captura de pantalla (5)](https://user-images.githubusercontent.com/37676736/139481385-cd574640-d687-4bd1-ae4d-c0b3b636a0dd.png)
 
+## GetProducts
+![Captura de pantalla (25)](https://user-images.githubusercontent.com/37676736/143899902-979a9fa7-e651-4bae-a2d0-9ffe7480a1e0.png)
+
+
 ## Frontend
 
 The frontend repository is here: https://github.com/MarioQuirosLuna/Frontend-SewingShop
