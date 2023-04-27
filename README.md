@@ -15,7 +15,6 @@
 |--|
 |![Img preview](https://res.cloudinary.com/dusx4zdpz/image/upload/v1638990442/portfolio/portfolio/Codigo_r5ims3.png)|
 
-Deployed in: https://backend-sewingshop.herokuapp.com/api/products
 
 ## 💻 About the project.
 
