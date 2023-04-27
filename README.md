@@ -23,8 +23,6 @@
    It is a project that I did for the small sewing business that belongs to my mother, in which I needed to show the products that she made
    
    The frontend repository is here: https://github.com/MarioQuirosLuna/Frontend-SewingShop
-
-   FrontEnd Deployed in: https://tallerdecosturacintyaluna.vercel.app/
    
    ### 🏆 Specifications.
 
